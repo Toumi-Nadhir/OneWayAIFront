@@ -37,7 +37,7 @@ export class TwostepComponent implements OnInit {
     console.log(this.route.queryParams)
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
-    });
+    });   
 
     console.log(this.code.value);
   }

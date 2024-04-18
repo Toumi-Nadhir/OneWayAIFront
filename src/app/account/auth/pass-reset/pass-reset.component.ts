@@ -28,15 +28,11 @@ export class PassResetComponent {
         console.log('nadhir');
       },
       error => {
-        if (error.status === 200) {
-          this.router.navigate(['auth/twostep'], {queryParams: {email: this.email}}).catch(navError => console.log(navError));
+        if (error.status === 404) {
+          this.errorMessage = 'User not found with email';
+        } else {
           console.log(error.status);
-        } else if (error){
-          this.errorMessage = 'Email is incorrect';
-          console.log(error.status);
-
-          // Set the error message
-          console.log('yassin');
+          console.log(error)
         }
       }
     );
