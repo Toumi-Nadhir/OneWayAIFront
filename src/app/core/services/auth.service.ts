@@ -198,4 +198,24 @@ export class AuthenticationService {
   resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
     return this.http.post<any>(AUTH_API+`reset-password`, { token, password, confirmPassword });
   }
+
+
+
+  uploadFile(file: File): Observable<string> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json'
+      })
+    };
+
+    return this.http.post<string>(AUTH_API+ 'upload', formData, httpOptions).pipe(
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        return throwError(error);
+      })
+    );
+  }
 }

@@ -18,9 +18,9 @@
             <div class="card-body pt-0 mt-n5">
                 <div class="text-center">
                     <div class="profile-user position-relative d-inline-block mx-auto">
-                        <img src="assets/images/users/avatar-1.jpg" alt="" id="user-img" class="avatar-lg rounded-circle object-fit-cover border-0 img-thumbnail user-profile-image">
+                        <img [src]="imageToShow"  alt="photo de profile" id="user-img" class="avatar-lg rounded-circle object-fit-cover border-0 img-thumbnail user-profile-image">
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit position-absolute end-0 bottom-0">
-                            <input id="profile-img-file-input" type="file" class="profile-img-file-input d-none" (change)="fileChange($event,'1')">
+                            <input id="profile-img-file-input" type="file" class="profile-img-file-input d-none" (change)="onFileSelected($event)">
                             <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                 <span class="avatar-title rounded-circle bg-light text-body">
                                     <i class="bi bi-camera"></i>
@@ -532,7 +532,7 @@
                                     </div>
                                 </div>
                                 <div id="newForm" style="display: none;">
-    
+
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2">

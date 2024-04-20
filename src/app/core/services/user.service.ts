@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import { User } from 'src/app/store/Authentication/auth.models';
 import {GlobalComponent} from "../../global-component";
 import {AuthenticationService} from "./auth.service";
@@ -59,5 +59,29 @@ export class UserProfileService {
       console.log(id)
     return this.http.put<User>(API_URL+USER+`unblock/${id}`,{});
   }
+  uploadProfilePicture(file: File, email: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
 
+    formData.append('file', file);
+    formData.append('email', this.authService.currentUser()['sub']);
+
+    const req = new HttpRequest('POST', API_URL+USER+`upload-profile-picture`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+
+    return this.http.request(req).pipe(
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+  getImage(imageName: string): Observable<Blob> {
+      console.log(imageName);
+    return this.http.get(API_URL+USER+`image/${imageName}`, { responseType: 'blob' });
+  }
 }
