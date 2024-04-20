@@ -51,6 +51,7 @@ import { CourcesEffects } from './store/Learning-cources/cources.effect';
 import {AdminGuard} from "./core/guards/admin.guard";
 import {userGuard} from "./core/guards/user.guard";
 import {LayoutUserModule} from "./layout-user/layout-user.module";
+import {authInterceptorProviders} from "./core/helpers/auth.interceptor";
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -116,7 +117,7 @@ if (environment.defaultauth === 'firebase') {
     AngularFireAuthModule
   ],
   providers: [
-    AdminGuard,userGuard,
+    AdminGuard,userGuard,authInterceptorProviders,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: fakebackendInterceptor, multi: true },

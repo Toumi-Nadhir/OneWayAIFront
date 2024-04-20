@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as jwt_decode from 'jwt-decode';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'currentUser';
@@ -35,4 +36,16 @@ export class  TokenStorageService {
 
     return {};
   }
+
+/* public isTokenExpired(): boolean {
+  const token = this.getToken();
+  if (!token) {
+    return true;
+  }
+  // @ts-ignore
+   const decodedToken = jwt_decode(token); // Call jwt_decode directly as a function
+  const expirationDate = decodedToken.exp;
+  const currentDate = new Date().getTime() / 1000;
+  return expirationDate < currentDate;
+}*/
 }

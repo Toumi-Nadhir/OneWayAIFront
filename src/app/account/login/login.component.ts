@@ -11,24 +11,18 @@ import { login } from 'src/app/store/Authentication/authentication.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-
-// Login Component
 export class LoginComponent implements OnInit{
 
-  // Login Form
+
   loginForm!: UntypedFormGroup;
   submitted = false;
   fieldTextType!: boolean;
-  error = '';
-  returnUrl!: string;
+  errorLogin = '';
   a: any = 10;
   b: any = 20;
   toast!: false;
 
-  // set the current year
   year: number = new Date().getFullYear();
-
-  // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: UntypedFormBuilder,
               private authService:AuthenticationService,
               private router: Router,
@@ -59,58 +53,27 @@ export class LoginComponent implements OnInit{
   /**
    * Form submit
    */
-/*  onSubmit() {
-    this.submitted = true;
-
-    const email = this.f['email'].value; // Get the username from the form
-    const password = this.f['password'].value; // Get the password from the form
-
-    // Login Api
-    this.store.dispatch(login({ email: email, password: password }));
-  }*/
-
- /* onSubmit() {
-    this.submitted = true;
-
-    // @ts-ignore
-    const email = this.loginForm.get('email').value;
-    // @ts-ignore
-    const password = this.loginForm.get('password').value;
-
-    this.authService.login(email, password).subscribe(
-      (response) => {
-        // Handle successful login if needed
-        if (localStorage.getItem('currentUser')) {
-          this.router.navigate(['/']); // Navigate to home page
-        }
-      },
-      (error) => {
-        // Handle login error if needed
-      }
-    );
-  }*/
-
   onSubmit(): void {
-    this.error = '';
+    this.errorLogin = '';
     this.authService.login(this.f['email'].value, this.f['password'].value).subscribe(
       (response) => {
         if (response && response.accessToken) {
+          console.log(response);
           if(this.authService.currentUser()['scope'] === 'ADMIN'){
             this.router.navigate(['/']);
           } else {
             this.router.navigate(['/User']);
           }
-        } else {
-          // Handle unexpected response
-          // this.errorMessage = 'Unexpected response from server';
         }
       },
       (error) => {
-        console.log(error)
-        this.error = 'Invalid username or password';
-        // Handle error response
-
-        //this.errorMessage = 'Invalid username or password.';
+        if (error.error === 'Invalid username or password') {
+          this.errorLogin = 'Invalid username or password';
+        }else if (error.error.username) {
+          this.errorLogin = 'inavalid mail format';
+        }else if (error.error === 'User account is locked') {
+      this.errorLogin = 'User account is locked';
+    }
       }
     );
   }

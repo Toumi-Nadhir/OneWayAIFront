@@ -5,7 +5,7 @@ export class User {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  photoProfile?: string;
+  nonLocked?: string;
   email?: string;
   token?:string;
 

@@ -128,36 +128,15 @@ onSubmit() {
     },
     (error) => {
       if (error.status === 400) {
-        console.log('Bad Request:', error.error.firstName);
-        if (error.error.firstName && error.error.lastName && error.error.password) {
-          this.firstNameError = 'first name length min is 3 and max is 25';
-          this.lastNameError = 'last name is required and cannot be blank.';
-          this.passwordError = 'Password must contain at least one lowercase letter, one uppercase letter, and one number.';
-        }else if (error.error.firstName && error.error.password) {
-          console.log('Bad Request:', error);
-          this.firstNameError = 'first name length min is 3 and max is 25';
-          this.passwordError = 'Password must contain at least one lowercase letter, one uppercase letter, and one number.';
-        } else if (error.error.firstName && error.error.lastName) {
-          console.log('Bad Request:', error);
-          this.lastNameError = 'last name is required and cannot be blank.';
-          this.firstNameError = 'first name length min is 3 and max is 25';
-        }else if (error.error.password && error.error.lastName) {
-          console.log('Bad Request:', error);
-          this.lastNameError = 'last name is required and cannot be blank.';
-          this.passwordError = 'Password must contain at least one lowercase letter, one uppercase letter, and one number.';
-        } else if (error.error.firstName) {
-          console.log('Bad Request:', error);
-          this.firstNameError = 'first name length min is 3 and max is 25';
-        } else if (error.error.lastName) {
-          console.log('Bad Request:', error);
-          this.lastNameError = 'Last Name is required';
-        }else if (error.error.password ) {
-        console.log('Bad Request:', error);
-        this.passwordError = 'Password must contain at least one lowercase letter, one uppercase letter, and one number.';
-      }
+        if (error.error.firstName || error.error.lastName || error.error.password || error.error.email) {
+          this.firstNameError = error.error.firstName;
+          this.lastNameError = error.error.lastName;
+          this.passwordError = error.error.password;
+           this.emailError = error.error.email;
+           console.log(error.error.email)
+             }
       } else if(error.status === 500){
         if (error.error.error === 'Email already exists') {
-          console.log('Internal Server Error:', error.error.error);
           this.emailError = 'Email already exists';
         }else {
           console.log('An unexpected error occurred:', error);

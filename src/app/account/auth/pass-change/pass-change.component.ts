@@ -46,17 +46,15 @@ export class PassChangeComponent implements OnInit {
     // Call the resetPassword method and pass the token, password, and confirmPassword
     this.authService.resetPassword(token, this.password, this.confirmPassword).subscribe(
       data => {
+        this.router.navigate(['/auth/login']);
       },
       error => {
-        if (error.status === 200) {
-          this.router.navigate(['/auth/login']);
+        if (error.error.error ==='An unexpected error occurred' ) {
+          this.errorMessage = 'Password and Confirm Password do not match';
           console.log(error.status);
-        } else if (error){
-          this.errorMessage = 'Password and confirm password do not match';
-          console.log(error);
-
-          // Set the error message
-          console.log('yassin');
+        } else     if (error.error.error === 'Password must contain at least one lowercase letter, one uppercase letter, and one number.' ) {
+          this.errorMessage = error.error.error;
+          console.log(error.status);
         }
       }
     );

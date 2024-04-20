@@ -26,6 +26,7 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermConditionsComponent } from './term-conditions/term-conditions.component';
+import {CountUpModule} from "ngx-countup";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TermConditionsComponent } from './term-conditions/term-conditions.compo
     TermConditionsComponent
   ],
   imports: [
+    CountUpModule,
     CommonModule,
     ExtraPagesRoutingModule,
     SharedModule,

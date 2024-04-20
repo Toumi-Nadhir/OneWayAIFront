@@ -48,7 +48,7 @@ export const MENU: MenuItem[] = [
     id: 2,
     label: 'Users',
     icon: 'ri-apps-line',
-    link: '/apps/calendar',
+    link: '/pages/users',
     parentId: 8
   },
   {

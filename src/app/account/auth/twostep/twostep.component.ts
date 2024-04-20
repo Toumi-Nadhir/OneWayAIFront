@@ -37,7 +37,7 @@ export class TwostepComponent implements OnInit {
     console.log(this.route.queryParams)
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
-    });   
+    });
 
     console.log(this.code.value);
   }
@@ -53,24 +53,19 @@ export class TwostepComponent implements OnInit {
       this.authService.verifyCode(this.code.value).subscribe(
         data => {
           console.log(data);
-
-        },
-      error => {
-        if (error.status === 200) {
           let navigationExtras: NavigationExtras = {
             queryParams: {
               'token': this.code.value
             }
           };
           this.router.navigate(['auth/pass-change'], navigationExtras);
-          console.log(error);
-        } else if (error){
+        },
+      error => {
+
           this.errorMessage = 'Code is incorrect';
           console.log(error.status);
 
-          // Set the error message
           console.log('yassin');
-        }
       }
       );
     }

@@ -64,7 +64,7 @@ currentUser:any;
     public _cookiesService: CookieService,
     public store: Store<RootReducerState>,
     private TokenStorageService: TokenStorageService,
-  private userService: UserProfileService ) { }
+  private userService: UserProfileService) { }
 
   ngOnInit(): void {
     this.element = document.documentElement;
@@ -78,9 +78,13 @@ currentUser:any;
         user => {
           this.currentUser = user;
           console.log(this.currentUser);
+          if (this.currentUser===null) {
+            this.authService.logout();
+            location.reload();
+          }
         },
         error => {
-          console.error('Error:', error);
+          console.error('Errorrrrrr:', error);
         }
       );
 

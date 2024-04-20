@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/store/Authentication/auth.models';
 import {GlobalComponent} from "../../global-component";
 import {AuthenticationService} from "./auth.service";
-import {Observable} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 
 
@@ -29,13 +30,34 @@ export class UserProfileService {
   getUserByEmail(email: string):Observable<User>   {
     return this.http.get<User>(API_URL+USER+`email/${email}`);
   }
-
   getCurrentUser() {
     const email = this.authService.currentUser()['sub'];
-    console.log(email+"email");
-    return this.getUserByEmail(email);
-
+    console.log(email + "email");
+    return this.getUserByEmail(email).pipe(
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        return of(null); // Return a default value (null) if an error occurs
+      })
+    );
+  }
+  getAllUsers(): Observable<any> {
+    return this.http.get(API_URL+USER+`all`);
   }
 
+
+  blockUser(id: number): Observable<User> {
+    console.log(id);
+    return this.http.put<User>(API_URL+USER+`block/${id}`, {}).pipe(
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  unblockUser(id: number): Observable<any> {
+      console.log(id)
+    return this.http.put<User>(API_URL+USER+`unblock/${id}`,{});
+  }
 
 }

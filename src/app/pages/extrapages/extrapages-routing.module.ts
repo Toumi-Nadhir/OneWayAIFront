@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { TermConditionsComponent } from './term-conditions/term-conditions.component';
+import {UsersComponent} from "./users/users.component";
 
 const routes: Routes = [
   {
@@ -48,6 +49,11 @@ const routes: Routes = [
   {
     path: 'term-conditions',
     component: TermConditionsComponent
+  },
+  {
+    path: 'users',
+   component: UsersComponent
+
   }
 ];
 

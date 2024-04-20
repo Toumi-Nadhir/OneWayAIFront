@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
              console.log(err.error)
                 // auto logout if 401 response returned from api
                 this.authenticationService.logout();
-              // location.reload();
+             //location.reload();
             }
           console.log('Error status:', err); // Log the status of the error
           console.log('Error message:', err.error.message || err.statusText); // Log the message of the error
