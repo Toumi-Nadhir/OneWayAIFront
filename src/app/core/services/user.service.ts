@@ -40,7 +40,7 @@ export class UserProfileService {
       })
     );
   }
-  getAllUsers(): Observable<any> {
+  getAllUsers(): Observable<User> {
     return this.http.get(API_URL+USER+`all`);
   }
 
@@ -81,7 +81,6 @@ export class UserProfileService {
 
 
   getImage(imageName: string): Observable<Blob> {
-      console.log(imageName);
     return this.http.get(API_URL+USER+`image/${imageName}`, { responseType: 'blob' });
   }
 }

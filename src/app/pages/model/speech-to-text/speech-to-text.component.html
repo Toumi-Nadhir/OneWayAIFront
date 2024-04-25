@@ -1,295 +1,18 @@
 <div class="chat-wrapper d-lg-flex gap-1 p-1 mb-3">
   <div class="chat-wrapper-menu p-3 d-flex flex-column rounded">
     <div class="mb-3 position-relative d-none d-lg-block">
-      <a href="javascript:void(0);"><img src="assets/images/users/48/avatar-1.jpg" alt="" class="avatar-sm rounded"></a>
+      <a href="javascript:void(0);"><img [src]="imageToShow" alt="" class="avatar-sm rounded"></a>
       <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-success p-1"><span class="visually-hidden">unread messages</span></span>
     </div>
     <ul class="chat-menu list-unstyled text-center nav nav-pills justify-content-center">
-      <li class="nav-item" placement="right" tooltip="Chats" [class.active]="currentTab === 'chats'" (click)="changeTab('chats')" placement="right">
-        <a href="javascript:void(0);" class="nav-link active" [ngClass]="{'active':currentTab === 'chats'}"><i class="bi bi-chat-dots"></i></a>
-      </li>
-      <li class="nav-item" placement="right" tooltip="Contacts" [class.active]="currentTab === 'contacts'" (click)="changeTab('contacts')">
-        <a href="javascript:void(0);" class="nav-link" [ngClass]="{'active':currentTab === 'contacts'}"><i class="bi bi-people"></i></a>
-      </li>
-      <li class="nav-item" placement="right" tooltip="Calls" [class.active]="currentTab === 'calls'" (click)="changeTab('calls')" placement="right">
-        <a href="javascript:void(0);" class="nav-link" [ngClass]="{'active':currentTab === 'calls'}"><i class="bi bi-telephone"></i></a>
-      </li>
-      <li class="nav-item" placement="right" tooltip="Bookmark" [class.active]="currentTab === 'bookmark'" (click)="changeTab('bookmark')">
-        <a href="javascript:void(0);" class="nav-link" [ngClass]="{'active':currentTab === 'bookmark'}"><i class="bi bi-star"></i></a>
-      </li>
       <li class="nav-item" placement="right" tooltip="Attachment" [class.active]="currentTab === 'attachment'" (click)="changeTab('attachment')">
-        <a href="javascript:void(0);" class="nav-link" [ngClass]="{'active':currentTab === 'attachment'}"><i class="bi bi-file-earmark-richtext"></i></a>
+        <a href="javascript:void(0);" class="nav-link active" [ngClass]="{'active':currentTab === 'attachment'}"><i class="bi bi-file-earmark-richtext"></i></a>
       </li>
     </ul>
-
-    <div class="mt-auto text-center d-none d-lg-block">
-      <div dropdown [dropup]="true" container="body" class="dropdown">
-        <button dropdownToggle class="btn btn-secondary btn-icon" type="button">
-          <i class="bi bi-gear"></i>
-        </button>
-        <ul *bsDropdownMenu class="dropdown-menu">
-          <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
-          <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
-          <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
-        </ul>
-      </div>
-    </div>
   </div>
   <div class="chat-leftsidebar">
     <div class="tab-content">
-      <div [hidden]="currentTab !== 'chats'" class="tab-pane show active" id="pills-chats">
-        <div class="p-4">
-          <div class="d-flex align-items-start">
-            <div class="flex-grow-1">
-              <h5 class="mb-4">Chats</h5>
-            </div>
-            <div class="flex-shrink-0">
-              <div placement="bottom" tooltip="Add Contact">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-subtle-primary btn-sm">
-                  <i class="ri-add-line align-bottom"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="search-box">
-            <input type="text" class="form-control bg-light border-light" placeholder="Search here...">
-            <i class="ri-search-2-line search-icon"></i>
-          </div>
-        </div> <!-- .p-4 -->
-
-        <ngx-simplebar class="chat-room-list">
-          <div class="chat-message-list">
-            <ul class="list-unstyled chat-list chat-user-list" id="userList">
-              @for (data of chatData; track $index) {
-                <li id="userList" [ngClass]="$index == 0 ? 'active':''"> <a href="javascript: void(0);">
-                  <div class="d-flex align-items-center" (click)="chatUsername(data.name, data.image,$event)">
-                    <div class="flex-shrink-0 chat-user-img online align-self-center me-2 ms-0">
-                      <div class="avatar-xxs">
-                        @if (data.nickname) {
-                          <div class="avatar-title rounded-circle bg-primary text-white fs-xxs">
-                            {{data.nickname}}</div>
-                        }@else {
-                          <img src="{{data.profile}}" class="rounded-circle img-fluid userprofile" alt="">
-                        }
-                        <span class="user-status"></span>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 overflow-hidden">
-                      <p class="text-truncate mb-0">{{data.name}}</p>
-                    </div>
-                    @if (data.messagecount) {
-                      <div class="ms-auto"><span class="badge bg-dark-subtle text-dark rounded p-1">{{data.messagecount}}</span></div>
-                    }
-                  </div>
-                </a>
-                </li>
-              }
-            </ul>
-          </div>
-
-          <div class="d-flex align-items-center px-4 mt-4 pt-4 mb-2">
-            <div class="flex-grow-1">
-              <h4 class="mb-0 fs-xs text-muted text-uppercase">Channels</h4>
-            </div>
-            <div class="flex-shrink-0">
-              <div placement="bottom" tooltip="Create group" container="body">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-subtle-success btn-sm">
-                  <i class="ri-add-line align-bottom"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="chat-message-list">
-            <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
-              @for (data of channeldata; track $index) {
-                <li id="contact-id-10" data-name="channel">
-                  <a href="javascript: void(0);" class="unread-msg-user">
-                    <div class="d-flex align-items-center">
-                      <div class="flex-shrink-0 chat-user-img align-self-center me-2 ms-0">
-                        <div class="avatar-xxs">
-                          <div class="avatar-title bg-light rounded-circle text-body">#</div>
-                        </div>
-                      </div>
-                      <div class="flex-grow-1 overflow-hidden">
-                        <p class="text-truncate mb-0">{{data.name}}</p>
-                      </div>
-                      @if (data.messageCount) {
-                        <div>
-                          <div class="flex-shrink-0 ms-2"><span class="badge bg-dark-subtle text-dark rounded p-1">{{data.messageCount}}</span>
-                          </div>
-                        </div>
-                      }
-                    </div>
-                  </a>
-                </li>
-              }
-            </ul>
-          </div>
-          <!-- End chat-message-list -->
-        </ngx-simplebar>
-        <!-- end tab contact -->
-      </div>
-
-      <div [hidden]="currentTab !== 'contacts'" class="tab-pane fade show active" id="pills-contacts">
-        <div>
-          <div class="p-4">
-            <div class="d-flex align-items-start">
-              <div class="flex-grow-1">
-                <h5 class="mb-4">Contacts</h5>
-              </div>
-              <div class="flex-shrink-0">
-                <div placement="bottom" tooltip="Add Contact">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-subtle-primary btn-sm">
-                    <i class="ri-add-line align-bottom"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="search-box">
-              <input type="text" class="form-control bg-light border-light" placeholder="Search here...">
-              <i class="ri-search-2-line search-icon"></i>
-            </div>
-          </div> <!-- .p-4 -->
-          <div>
-            <ngx-simplebar class="chat-room-list">
-              @for (data of contactData; track $index) {
-                <div class="sort-contact">
-                  <div class="mt-3">
-                    <div class="contact-list-title">{{data.title}} </div>
-                    <ul id="contact-sort-A" class="list-unstyled contact-list">
-                      @for (contact of data.contacts; track $index) {
-                        <li>
-                          <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 me-2">
-                              <div class="avatar-xxs">
-                                @if (contact.isImg) {
-                                  <span class="avatar-title rounded-circle bg-primary fs-xxs">{{contact.profile}}</span>
-                                }@else{
-                                  <img src="{{contact.image}}" class="img-fluid rounded-circle" alt="">
-                                }
-                              </div>
-                            </div>
-                            <div class="flex-grow-1">
-                              <p class="text-truncate contactlist-name mb-0">{{contact.name}}
-                              </p>
-                            </div>
-                            <div class="flex-shrink-0">
-                              <div dropdown container="body" class="dropdown">
-                                <a dropdownToggle href="javascript:void(0);" class="text-muted">
-                                  <i class="bi bi-three-dots-vertical"></i> </a>
-                                <div *bsDropdownMenu class="dropdown-menu dropdown-menu-end"> <a class="dropdown-item" href="javascript:void(0);"><i class="bi bi-pencil text-muted me-2 align-bottom"></i>Edit</a>
-                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bi bi-slash-circle text-muted me-2 align-bottom"></i>Block</a>
-                                  <a class="dropdown-item" href="javascript:void(0);"><i class="bi bi-trash3 text-muted me-2 align-bottom"></i>Remove</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                </div>
-              }
-            </ngx-simplebar>
-          </div>
-        </div>
-      </div>
-
-      <div [hidden]="currentTab !== 'calls'" class="tab-pane show  fade active" id="pills-calls">
-        <div>
-          <div class="px-4 pt-4">
-            <h5 class="mb-4">Calls</h5>
-          </div>
-          <ngx-simplebar data-simplebar-track="light" class="chat-message-list chat-call-list">
-            <ul class="list-unstyled chat-list">
-              @for(data of callsData;track $index){
-                <li>
-                  <div class="d-flex align-items-center">
-                    <div class="chat-user-img flex-shrink-0 me-2">
-                      <div class="avatar-xxs">
-                        @if(data.isImg){
-                          <span class="avatar-title rounded-circle bg-primary fs-xxs">{{data.profile}}</span>
-
-
-                        }@else {
-                          <img src="{{data.image}}" class="rounded-circle img-fluid" alt="">
-                        }
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 overflow-hidden">
-                      <a href="javascript:void(0);" class="p-0">
-                        <p class="fw-medium text-truncate mb-0">{{data.name}}</p>
-                      </a>
-                      <div class="text-muted fs-xs text-truncate"><i class="bi bi-arrow-down-left text-success"></i> {{data.date}}
-                      </div>
-                    </div>
-                    <div class="flex-shrink-0 ms-3">
-                      <div class="d-flex align-items-center gap-3">
-                        <div>
-                          <h5 class="mb-0 fs-xs text-muted">{{data.time}}</h5>
-                        </div>
-                        <div>
-                          <button type="button" class="btn btn-link p-0 fs-lg stretched-link shadow-none">
-                            <i class="bi bi-camera-video align-middle"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              }
-            </ul>
-
-          </ngx-simplebar>
-        </div>
-      </div>
-
-      <div [hidden]="currentTab !== 'bookmark'" class="tab-pane show fade active" id="pills-bookmark">
-        <div>
-          <div class="px-4 pt-4">
-            <h5 class="mb-4">Bookmark</h5>
-          </div>
-          <ngx-simplebar class="chat-message-list chat-bookmark-list">
-            <ul class="list-unstyled chat-list">
-              @for(data of bookmarkData;track $index){
-                <li>
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 avatar-xs ms-1 me-3">
-                      <div class="avatar-title bg-primary-subtle text-primary rounded-circle">
-                        <i class="{{data.icon}}"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 overflow-hidden">
-                      <h5 class="mb-1"><a href="javascript:void(0);" class="text-truncate p-0">{{data.fileName}}</a></h5>
-                      <p class="text-muted text-truncate fs-xs mb-0">{{data.size}}</p>
-                    </div>
-
-                    <div class="flex-shrink-0 ms-3">
-                      <div dropdown [container]="'body'" [dropup]="$index > bookmarkData.length - 4" class="dropdown">
-                        <a dropdownToggle class="fs-md text-muted px-1" href="javascript:void(0);">
-                          <i class="bi bi-three-dots"></i>
-                        </a>
-                        <div *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
-                          <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0);">Open <i class="bi bi-file-earmark ms-2 text-muted"></i></a>
-                          <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0);">Edit <i class="bi bi-pencil ms-2 text-muted"></i></a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0);">Delete <i class="bi bi-trash3 ms-2 text-muted"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              }
-            </ul>
-          </ngx-simplebar>
-        </div>
-      </div>
-
-      <div [hidden]="currentTab !== 'attachment'" class="tab-pane show fade active" id="pills-attachment">
+      <div [hidden]="currentTab !== 'attachment'" class="tab-pane show active" id="pills-attachment">
         <div>
           <div class="px-4 pt-4">
             <h5 class="mb-4">Attachment</h5>
@@ -336,93 +59,13 @@
 
         </div>
       </div>
-      <!-- end tab-pane -->
     </div>
-    <!-- end tab content -->
   </div>
-  <!-- end chat leftsidebar -->
 
-  <!-- Start User chat -->
+
+
+
   <div class="user-chat w-100 overflow-hidden">
-    <div class="flex-column justify-content-between h-100 video-content" [ngClass]="{'d-none': !showVideoContent, 'd-flex': showVideoContent}">
-      <div class="p-3 user-chat-topbar border-bottom border-2">
-        <div class="row align-items-center justify-content-between flex-nowrap">
-          <div class="col-sm-4 col">
-            <div class="d-flex align-items-center">
-              <div class="flex-shrink-0 d-block d-lg-none me-3">
-                <a href="javascript: void(0);" class="user-chat-remove fs-lg p-1"><i class="ri-arrow-left-s-line align-bottom"></i></a>
-              </div>
-              <div class="flex-grow-1 overflow-hidden">
-                <div class="d-flex align-items-center">
-                  <div class="flex-shrink-0 chat-user-img online user-own-img align-self-center me-3 ms-0">
-                    <img src="assets/images/users/48/avatar-2.jpg" class="rounded-circle avatar-xs" alt="">
-                    <span class="user-status"></span>
-                  </div>
-                  <div class="flex-grow-1 overflow-hidden">
-                    <h5 class="text-truncate mb-1 fs-lg"><a class="text-reset username" data-bs-toggle="offcanvas" href="javascript:void(0);" aria-controls="userProfileCanvasExample">{{username}}</a></h5>
-                    <p class="text-truncate text-muted fs-md mb-0 userStatus"><small>Creative
-                      Desginer</small></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-auto">
-            <div class="text-end">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inviteMembersModal"><i class="bi bi-plus d-block d-sm-none"></i> <span class="ms-1 d-none d-sm-block">Add Participant</span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end chat user head -->
-      <ngx-simplebar class="p-3 chat-conversation">
-        <div class="row g-3">
-          <div class="col-lg-9">
-            <div class="position-relative">
-              <a href="javascript:void(0);">
-                <img src="assets/images/chat-user.jpeg" alt="" class="object-fit-cover w-100 rounded" height="515">
-              </a>
-              <div class="btn-group position-absolute top-0 end-0 bg-white bg-opacity-50 p-1 m-3" role="group" aria-label="Basic example">
-                <button type="button" class="btn-close"></button>
-              </div>
-              <div class="badge bg-danger d-inline-block position-absolute bottom-0 end-0 m-3 fs-lg fw-normal">
-                <span id="outputt" class="timerClock" value="00:00:00">{{formattedTime}}</span>
-              </div>
-            </div>
-          </div><!--end col-->
-          <div class="col-lg-3">
-            <div class="row g-3">
-              <div class="col-lg-12">
-                <div class="position-relative">
-                  <a href="javascript:void(0);">
-                    <img src="assets/images/users/avatar-5.jpg" alt="" class="w-100 object-fit-cover rounded" height="250">
-                  </a>
-                </div>
-              </div><!--end col-->
-              <div class="col-lg-12">
-                <div class="position-relative">
-                  <a href="javascript:void(0);">
-                    <img src="assets/images/users/avatar-7.jpg" alt="" class="w-100 object-fit-cover rounded" height="250">
-                  </a>
-                </div>
-              </div><!--end col-->
-            </div><!--end row-->
-          </div><!--end col-->
-        </div><!--end row-->
-      </ngx-simplebar>
-
-      <div class="p-3 chat-input-section border-top border-2">
-        <div class="row align-items-center justify-content-between">
-          <div class="col-lg-12">
-            <div class="hstack gap-2 justify-content-center">
-              <button class="btn btn-subtle-secondary fs-lg btn-icon rounded-circle"><i class="ph-video-camera-slash"></i></button>
-              <button class="btn btn-danger fs-lg btn-icon rounded-circle call-disconnect" (click)="disconnectCall()"><i class="ph-phone-disconnect"></i></button>
-              <button class="btn btn-subtle-secondary fs-lg btn-icon rounded-circle"><i class="ph-microphone-slash"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="chat-content" [ngClass]="{'d-none': !showChatContent, 'd-lg-flex': showChatContent}">
       <!-- start chat conversation section -->
@@ -457,33 +100,6 @@
                 </div>
                 <div class="col-sm-8 col-auto">
                   <ul class="list-inline user-chat-nav text-end mb-0">
-                    <li class="list-inline-item m-0">
-                      <div dropdown [insideClick]="true" class="dropdown">
-                        <button dropdownToggle class="btn btn-ghost-secondary btn-icon" type="button">
-                          <i class="bi bi-search"></i>
-                        </button>
-                        <div *bsDropdownMenu class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg">
-                          <div class="p-2">
-                            <div class="search-box">
-                              <input type="text" class="form-control bg-light border-light" placeholder="Search here..." (keyup)="MessageSearch()" id="searchMessage">
-                              <i class="ri-search-2-line search-icon"></i>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="list-inline-item d-none d-lg-inline-block m-0">
-                      <button type="button" class="btn btn-ghost-secondary fs-lg btn-icon video-icon" (click)="startVideocall()">
-                        <i class="bi bi-camera-video"></i>
-                      </button>
-                    </li>
-
-                    <li class="list-inline-item d-none d-lg-inline-block m-0">
-                      <button type="button" class="btn btn-ghost-secondary fs-lg btn-icon" data-bs-toggle="offcanvas" data-bs-target="#userProfileCanvasExample" aria-controls="userProfileCanvasExample" (click)="openEnd()">
-                        <i class="bi bi-telephone"></i>
-                      </button>
-                    </li>
 
                     <li class="list-inline-item m-0">
                       <div dropdown class="dropdown">
@@ -705,7 +321,7 @@
                       }
                     </div>
                   }
-                  <input type="text" class="form-control chat-input bg-light border-light" formControlName="message" [ngClass]="{ 'is-invalid': submitted && form['message'].errors }" [(ngModel)]="emoji" (blur)="onBlur()" (focus)="onFocus()" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                  <input type="file" accept="audio/*" class="form-control bg-light border-light" formControlName="audio" id="audio-input">
                 </div>
                 <div class="col-auto">
                   <div class="chat-input-links ms-2">

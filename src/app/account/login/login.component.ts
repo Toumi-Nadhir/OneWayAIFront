@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
 import { login } from 'src/app/store/Authentication/authentication.actions';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,6 +32,9 @@ export class LoginComponent implements OnInit{
 ) { }
 
   ngOnInit(): void {
+
+    // Ensure that SocialAuthService is initialized before calling signIn method
+
     let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if(currentUser['scope'] === 'ADMIN'){
       this.router.navigate(['/']);
@@ -83,4 +87,14 @@ export class LoginComponent implements OnInit{
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
+
+
+ /* signInWithGoogle(): void {
+    if (this.socialAuthService) {
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    } else {
+      console.error('SocialAuthService is not initialized');
+    }
+  }
+*/
 }

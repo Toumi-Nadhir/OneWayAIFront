@@ -12,6 +12,7 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
 import { ContactsComponent } from './contacts/contacts.component';
 import { TermConditionsComponent } from './term-conditions/term-conditions.component';
 import {UsersComponent} from "./users/users.component";
+import {ModelsComponent} from "./models/models.component";
 
 const routes: Routes = [
   {
@@ -53,6 +54,11 @@ const routes: Routes = [
   {
     path: 'users',
    component: UsersComponent
+
+  },
+  {
+    path: 'models',
+    component: ModelsComponent
 
   }
 ];

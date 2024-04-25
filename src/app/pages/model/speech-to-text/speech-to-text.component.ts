@@ -22,6 +22,8 @@ import {
   selectData
 } from "../../../store/chat/chat.selector";
 import {cloneDeep} from "lodash";
+import {UserProfileService} from "../../../core/services/user.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-speech-to-text',
@@ -37,7 +39,7 @@ export class SpeechToTextComponent {
   chatData: any
   searchText: any;
   searchMsgText: any;
-  formData!: UntypedFormGroup;
+
   usermessage!: string;
   isFlag: boolean = false;
   submitted = false;
@@ -48,7 +50,7 @@ export class SpeechToTextComponent {
   images: { src: string; thumb: string; caption: string }[] = [];
   isreplyMessage = false;
   emoji = '';
-  currentTab = 'chats';
+  currentTab = 'attachment';
   showChatContent = true;
   showVideoContent = false;
   running = true;
@@ -61,9 +63,19 @@ export class SpeechToTextComponent {
   callsData: any;
   bookmarkData: any;
 
-  constructor(public formBuilder: UntypedFormBuilder, private datePipe: DatePipe, public store: Store) { }
+  currentUser:any;
+  imageToShow: any;
+  constructor(public formBuilder: UntypedFormBuilder, private datePipe: DatePipe, public store: Store,
+              private userService: UserProfileService,
+              private sanitizer: DomSanitizer) { }
 
+  formData = this.formBuilder.group({
+    message: ['', Validators.required],
+    audio: ['']  // New form control for audio file
+  });
   ngOnInit(): void {
+
+    this.getImage();
     // Chat Data Get Function
     this._fetchData();
 
@@ -75,6 +87,35 @@ export class SpeechToTextComponent {
     this.onListScroll();
   }
 
+  getImage() {
+    this.userService.getCurrentUser().subscribe(
+      user => {
+        this.currentUser = user;
+        console.log("&&&&&&&&&&&");
+        console.log(this.currentUser.photoProfile);
+
+        // Call getImage inside the subscribe block of getCurrentUser
+        this.userService.getImage(this.currentUser.photoProfile).subscribe(data => {
+          this.createImageFromBlob(data);
+        }, error => {
+          console.log(error);
+        });
+      },
+      error => {
+        console.error('Errorrrrrr:', error);
+      }
+    );
+  }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.imageToShow = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
   ngAfterViewInit() {
     this.scrollRef.SimpleBar.getScrollElement().scrollTop = 300;
     this.onListScroll();

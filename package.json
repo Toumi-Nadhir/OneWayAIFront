@@ -45,6 +45,7 @@
     "angular-ng-autocomplete": "^2.0.12",
     "angular-ng-stepper": "^2.0.0",
     "angularx-flatpickr": "^7.3.0",
+    "angularx-social-login": "^4.1.0",
     "apexcharts": "^3.44.0",
     "bootstrap": "5.3.2",
     "echarts": "^5.4.3",

@@ -52,6 +52,44 @@ export const MENU: MenuItem[] = [
     parentId: 8
   },
   {
+    id: 2,
+    label: 'Models',
+    icon: 'ph-gauge',
+    subItems: [
+      {
+        id: 2,
+        label: 'Models STT',
+        icon: 'ri-apps-line',
+        link: '/pages/models',
+        parentId: 8
+      },
+      {
+        id: 4,
+        label: 'MENUITEMS.DASHBOARD.LIST.CRM',
+        link: '/crm',
+        parentId: 2
+      },
+      {
+        id: 5,
+        label: 'MENUITEMS.DASHBOARD.LIST.ECOMMERCE',
+        link: '/',
+        parentId: 2
+      },
+      {
+        id: 6,
+        label: 'MENUITEMS.DASHBOARD.LIST.LEARNING',
+        link: '/learning',
+        parentId: 2
+      },
+      {
+        id: 7,
+        label: 'MENUITEMS.DASHBOARD.LIST.REALESTATE',
+        link: '/real-estate',
+        parentId: 2
+      }
+    ]
+  },
+  {
     id: 3,
     label: 'Model',
     isTitle: true

@@ -6,7 +6,7 @@
 
         <div class="text-center">
           <div class="mt-n4">
-            <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle p-1 mt-n2">
+            <img [src]="user.imageToShow ?? 'assets/images/users/avatar-1.jpg'"  alt="" class="avatar-md rounded-circle p-1 mt-n2">
           </div>
           <div class="mt-4 border-bottom border-bottom-dashed">
             <h5 class="fs-17">{{user.lastName}} {{user.firstName}}</h5>

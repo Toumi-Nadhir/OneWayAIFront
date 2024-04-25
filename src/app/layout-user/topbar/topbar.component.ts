@@ -15,6 +15,7 @@ import { getLayoutmode } from 'src/app/store/layouts/layout-selector';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import {UserProfileService} from "../../core/services/user.service";
 import {data} from "../../pages/charts/area/area.component";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-topbar-user',
@@ -25,7 +26,7 @@ export class TopbarComponent {
 
   country: any;
   selectedItem!: any;
-
+  imageToShow: any;
   flagvalue: any;
   valueset: any;
   countryName: any;
@@ -64,19 +65,24 @@ currentUser:any;
     public _cookiesService: CookieService,
     public store: Store<RootReducerState>,
     private TokenStorageService: TokenStorageService,
-  private userService: UserProfileService ) { }
+  private userService: UserProfileService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.element = document.documentElement;
    // this.userData = this.userService.getCurrentUser();
     console.log(this.currentUser);
-
+    this.getImage()
     this.role=this.authService.currentUser()['scope']
     console.log(this.role);
      this.userService.getCurrentUser().subscribe(
         user => {
           this.currentUser = user;
           console.log(this.currentUser);
+          if (this.currentUser===null) {
+            this.authService.logout();
+            location.reload();
+          }
         },
         error => {
           console.error('Error:', error);
@@ -117,7 +123,35 @@ currentUser:any;
       }
     });
   }
+  getImage() {
+    this.userService.getCurrentUser().subscribe(
+      user => {
+        this.currentUser = user;
+        console.log("&&&&&&&&&&&");
+        console.log(this.currentUser.photoProfile);
 
+        // Call getImage inside the subscribe block of getCurrentUser
+        this.userService.getImage(this.currentUser.photoProfile).subscribe(data => {
+          this.createImageFromBlob(data);
+        }, error => {
+          console.log(error);
+        });
+      },
+      error => {
+        console.error('Errorrrrrr:', error);
+      }
+    );
+  }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.imageToShow = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
   windowScroll() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
       (document.getElementById('back-to-top') as HTMLElement).style.display = "block";

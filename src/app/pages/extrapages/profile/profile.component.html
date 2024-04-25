@@ -235,7 +235,7 @@
 
     <div class="col-xl-9 position-relative ">
         <div class="position-absolute end-0 top-0" style="z-index:999">
-            <a routerLink="/pages/profile-settings" class="btn btn-primary"><i class="ri-edit-box-line align-bottom"></i> Edit Profile</a>
+          <a [routerLink]="role === 'ADMIN' ? '/pages/profile-settings' : '/User/pages/profile-settings'" class="btn btn-primary"><i class="ri-edit-box-line align-bottom"></i> Edit Profile</a>
         </div><!--end col-->
         <div class="row align-items-center mt-4 mt-sm-0 pt-2 pt-sm-0 mb-3">
             <div class="col-md">
